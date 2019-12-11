@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>首页</title>
+</head>
+<body>
+	<table border='1px'   cellspacing='0'  align='center'  cellpadding='2px' >
+		<tr align='center' >
+			<td>编号</td>
+			<td>书名</td>
+			<td>价格</td>
+			<td>描述</td>
+			<td>数量</td>
+			<td>操作</td>
+		</tr>
+		<form action="/jd1908-servlet/buyBook"  method='post'>
+		<tr align='center' >
+			<td><input type='text' name='book_id' value='01' readonly="readonly" style='text-align:center'></td>
+			<td><input type='text' name='book_name' value='朝花夕拾' readonly="readonly"  style='text-align:center'></td>
+			<td><input type='text' name='book_price' value='24' readonly="readonly"  style='text-align:center'></td>
+			<td><input type='text' name='book_desc' value='黑嘿嘿' readonly="readonly"   style='text-align:center'></td>
+			<td><input type='text' name='book_number' style='text-align:center'></td>
+			
+			<td><a><input  type='submit'  value='购买'></a></td>
+		</tr>
+		</form>
+		<form action="/jd1908-servlet/buyBook"  method='post'>
+		<tr align='center' >
+			<td>02</td>
+			<td>梦里花落知多少</td>
+			<td>25</td>
+			<td>啦啦啦</td>
+			<td><input type='text' name='book_number' style='text-align:center'></td>
+			<td><a><input  type='submit'  value='购买'></a></td>
+		</tr>
+		</form>
+		<form action="/jd1908-servlet/buyBook">
+		<tr align='center' >
+			<td>03</td>
+			<td>杯中窥人</td>
+			<td>26</td>
+			<td>哈哈哈</td>
+			<td><input type='text' name='book_number' style='text-align:center'></td>
+			<td><a><input  type='submit'  value='购买'></a></td>
+		</tr>
+		</form>
+	</table>
+</body>
+</html>

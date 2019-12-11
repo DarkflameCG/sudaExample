@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>suda17project</display-name>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>test1</servlet-name>
+  	<servlet-class>com.briup.suda.Hello2Servlet</servlet-class>
+	
+	<init-param>
+		<param-name>username</param-name>
+		<param-value>joker</param-value>
+	</init-param>
+	<init-param>
+		<param-name>password</param-name>
+		<param-value>123</param-value>
+	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test1</servlet-name>
+  	<url-pattern>/test1</url-pattern>
+  </servlet-mapping>
+  
+  
+  <filter>
+  	<filter-name>filter1</filter-name>
+  	<filter-class>com.briup.web.filter.Test1Filter</filter-class>
+  	
+  </filter>
+  <filter-mapping>
+  	<filter-name>filter1</filter-name>
+  	<!-- 代表将要拦截哪一条请求 -->
+  	<url-pattern>/user/*</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>INCLUDE</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  	<dispatcher>ERROR</dispatcher>
+  	
+  </filter-mapping>
+  
+  
+<!--   <listener>
+  	<listener-class>com.briup.web.listener.Test1Listener</listener-class>
+  </listener> -->
+
+  
+  
+  
+  
+  
+  
+</web-app>

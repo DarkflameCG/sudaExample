@@ -35,7 +35,8 @@ public class DB2Test {
 	public static void main(String[] args) {
 		
 		try {
-			batchInsert(3456);
+			//batchInsert(3456);
+			test();
 			System.out.println("批处理插入成功");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -71,6 +72,13 @@ public class DB2Test {
 	//插入语句
 		//同构的sql
 		//异构的sql
+	public static void test() throws ClassNotFoundException, SQLException {
+		conn = DiyJDBCUtil.getConnection();
+		String sql = "select * from esuser where id=?";
+		pst = conn.prepareStatement(sql);
+		pst.setLong(1, 1);
+		pst.executeQuery();
+	}
 	
 	//批处理插入
 	public static void batchInsert(int count) throws ClassNotFoundException, SQLException {

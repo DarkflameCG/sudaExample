@@ -2,6 +2,7 @@ package com.briup.web.demo;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,16 +16,22 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.tribes.util.Arrays;
 
+import com.briup.bean.EsBook;
 import com.briup.bean.EsUser;
 import com.briup.bean.User;
 import com.briup.sevice.LoginServiceImpl;
+import com.briup.sevice.impl.BookServiceImpl;
 import com.briup.sevice.impl.UserServiceImpl;
 
 //登录
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public LoginServlet() {
+    //准备所有业务接口的成员变量
+	private UserServiceImpl userimpl = new UserServiceImpl();
+	private BookServiceImpl bookimpl = new BookServiceImpl();
+	
+	public LoginServlet() {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,11 +65,9 @@ public class LoginServlet extends HttpServlet {
 //		}
 		
 		//根据拿到的参数，作判断
-		
-		UserServiceImpl impl = new UserServiceImpl();
 		try {
 			//如果正确返回一个对象
-			EsUser user= impl.userLogin(username, password);
+			EsUser user= userimpl.userLogin(username, password);
 			
 			if(user != null) {
 				//当用户存在
@@ -78,14 +83,19 @@ public class LoginServlet extends HttpServlet {
 					cookie.setMaxAge(60*60*24*7);  //十天内免登陆
 					response.addCookie(cookie);
 				}
+				//获取所有书籍信息
+				List<EsBook> booklist = bookimpl.findAllBooks();
+				//保存在session里
+				session.setAttribute("booklist", booklist);
+				
 				//页面跳转 需要区分角色
 				if(user.getRole()==0) {
 					//普通用户
-					response.sendRedirect("html/mainpage.html");
+					response.sendRedirect("jsp/project/mainpage.jsp");
 					return;
 				}
 					//管理员用户
-					response.sendRedirect("html/adminmainpage.html");
+					response.sendRedirect("jsp/project/adminmainpage.html");
 					
 					
 			}else {

@@ -15,9 +15,12 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.tribes.util.Arrays;
 
+import com.briup.bean.EsUser;
 import com.briup.bean.User;
 import com.briup.sevice.LoginServiceImpl;
+import com.briup.sevice.impl.UserServiceImpl;
 
+//登录
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -48,20 +51,22 @@ public class LoginServlet extends HttpServlet {
 //		}
 //		
 		//获取所有的参数的名字和值
-		Map<String, String[]> pnvs = request.getParameterMap();
-		Set<String> set =pnvs.keySet();
-		for(String s : set) {
-			System.out.println("key:"+s+"，value:"+Arrays.toString(pnvs.get(s)));
-		}
+//		Map<String, String[]> pnvs = request.getParameterMap();
+//		Set<String> set =pnvs.keySet();
+//		for(String s : set) {
+//			System.out.println("key:"+s+"，value:"+Arrays.toString(pnvs.get(s)));
+//		}
 		
 		//根据拿到的参数，作判断
 		
-		LoginServiceImpl impl = new LoginServiceImpl();
+		UserServiceImpl impl = new UserServiceImpl();
 		try {
-			boolean flag = impl.userLogin(username, password);
-			if(flag) {
+			//如果正确返回一个对象
+			EsUser user= impl.userLogin(username, password);
+			
+			if(user != null) {
 				//当用户存在
-				User user = new User(username,password);
+				//User user = new User(username,password);
 				//将登陆信息保存在session里
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
@@ -73,7 +78,16 @@ public class LoginServlet extends HttpServlet {
 					cookie.setMaxAge(60*60*24*7);  //十天内免登陆
 					response.addCookie(cookie);
 				}
-				response.sendRedirect("html/mainpage.html");				
+				//页面跳转 需要区分角色
+				if(user.getRole()==0) {
+					//普通用户
+					response.sendRedirect("html/mainpage.html");
+					return;
+				}
+					//管理员用户
+					response.sendRedirect("html/adminmainpage.html");
+					
+					
 			}else {
 				//如果登录失败
 				//重新跳转到登录页上
